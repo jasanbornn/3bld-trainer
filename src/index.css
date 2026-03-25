@@ -23,11 +23,30 @@ h1 {
 
 }
 
+#top-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
 #scramble-container {
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
+}
+
+#memo-text-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+p {
+    color: #ccc;
+
 }
 
 .button {
