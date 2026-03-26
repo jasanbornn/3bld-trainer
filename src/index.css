@@ -7,6 +7,12 @@ html {
 
 h1 {
     color: #ccc;
+    font-size: 1.8rem;
+}
+
+h3 {
+    color: #ccc;
+    font-size: 1.0rem;
 }
 
 #root {
@@ -90,4 +96,18 @@ p {
 #cube-net-spacer {
     aspect-ratio: 1 / 1;
     background-color: transparent;
+}
+
+#edge-memo-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#corner-memo-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
