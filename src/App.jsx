@@ -6,17 +6,6 @@ Cube.initSolver();
 
 const cube = new Cube();
 
-function Button({text, onClick}) {
-
-    return (
-        <button
-            className="button"
-            onClick={onClick}
-        >{text}</button>
-    )
-
-}
-
 function CubeNet({stickers}) {
 
     return (
@@ -349,7 +338,6 @@ function EdgeMemoPairs({cubeState}) {
 }
 
 function CornerMemoPairs({cubeState}) {
-    
 
     function getCornerLabelFromPandO(permutation, orientation) {
         switch(permutation) {
@@ -641,44 +629,138 @@ function CornerMemoPairs({cubeState}) {
     )
 }
 
-function App() {
-    const [solution, setSolution] = useState("");
-    const [stickers, setStickers] = useState("UUUUUUUUURRRRRRRRRFFFFFFFFFDDDDDDDDDLLLLLLLLLBBBBBBBBB");
-
-    function updateScramble() {
-        cube.randomize();
-        //cube.identity();
-        //cube.move("L2 U2 F2 L2 F2 L2 R2 D B2 R2 F2 U' R' D' L2 R2 U R'"); // few edges with new cycle
-        //cube.init(Cube.fromString("UUUUUFUUURRRLRRRRRFFFFFUFFFDDDDDDDDDLRLLLLLLLBBBBBBBBB")); // few edges buffer piece starts solved
-        //R2 U2 B2 U' R2 U' F2 D' B2 D B2 L' B U L B R2 B' F R2
-        //cube.move("B2 F' B R2 B' L' U' B' L B2 D' B2 D F2 U R2 U B2 U2 R2"); //study scramble
-        setSolution(Cube.inverse(cube.solve()));
-        setStickers(cube.asString());
-        console.log("state: " + JSON.stringify(cube.toJSON()));
-        console.log("faces: " + cube.asString());
-    }
-
+function ExecTopInterface({appState, cube, updateScramble, solution}) {
+    
+    const display = (appState == "execution") ? "flex" : "none";
+    
     return (
-        <>
-
-        <div id="top-container">
+        <div id="exec-top-container" style={{display: display}}>
             <div id="scramble-container">
                 <div>
                     <h1>{solution}</h1>
                 </div>
-                <Button text="↺" onClick={updateScramble}/>
+                <button onClick={updateScramble}>↺</button>
             </div>
 
             <div id="memo-text-conatiner">
                 <MemoPairs cubeState={cube}/>
             </div>
         </div>
+    );
+}
 
-        <div id="cube-net-container">
-            <CubeNet stickers={stickers}/>
+function ExecBottomInterface({appState, setAppState, stickers}) {
+
+    const display = (appState == "execution") ? "flex" : "none";
+
+    return (
+        <div id="exec-bottom-container" style={{display: display}}>
+            <div id="switch-buttons-container">
+                <button onClick={() => {setAppState("tracing")}}>Tracing</button>
+            </div>
+            <div id="cube-net-container">
+                <CubeNet stickers={stickers}/>
+            </div>
         </div>
+    );
+
+}
+
+function ExecInterface({appState, setAppState}) {
+    const [solution, setSolution] = useState("");
+    const [stickers, setStickers] = useState("UUUUUUUUURRRRRRRRRFFFFFFFFFDDDDDDDDDLLLLLLLLLBBBBBBBBB");
+
+    function updateScramble() {
+        cube.randomize();
+        setSolution(Cube.inverse(cube.solve()));
+        setStickers(cube.asString());
+    }
+
+    return (
+        <>
+            <ExecTopInterface appState={appState} cube={cube} updateScramble={updateScramble} solution={solution}/>
+            <ExecBottomInterface appState={appState} setAppState={setAppState} stickers={stickers}/>
+        </>
+    );
+
+}
+
+function TracingCornerPreview({tracingState}) {
+    const display = (tracingState == "corner") ? "grid" : "none";
+
+    return (
+        <>
+            <div id="corner-preview" style={{display: display}}>
+                <div id="corner-target-sticker"></div>
+                <div id="corner-second-sticker"></div>
+                <div id="corner-third-sticker"></div>
+            </div>
+        </>
+    );
+}
+
+function TracingEdgePreview({tracingState}) {
+    const display = (tracingState == "edge") ? "grid" : "none";
+
+    return (
+        <>
+            <div id="edge-preview" style={{display: display}}>
+                <div id="edge-second-sticker"></div>
+                <div id="edge-target-sticker"></div>
+            </div>
+        </>
+    );
+}
+
+function TracingTopInterface({appState, tracingState}) {
+    const display = (appState == "tracing") ? "flex" : "none";
+
+    return (
+        <div id="tracing-top-container" style={{display: display}}>
+            <h1>Tracing [WIP]</h1>
+            <TracingCornerPreview tracingState={tracingState}/>
+            <TracingEdgePreview tracingState={tracingState}/>
+        </div>
+    );
+}
+
+function TracingBottomInterface({appState, setAppState, tracingState, toggleTracingState}) {
+    const display = (appState == "tracing") ? "flex" : "none";
 
 
+    return (
+        <div id="tracing-bottom-container" style={{display: display}}>
+            <button onClick={() => {setAppState("execution")}}>Execution</button>
+            <button onClick={toggleTracingState}>{(tracingState == "corner") ? "Corner" : "Edge"}</button>
+        </div>
+    );
+}
+
+function TracingInterface({appState, setAppState}) {
+    const [tracingState, setTracingState] = useState("corner"); //corner or edge
+
+    function toggleTracingState() {
+        const newState = (tracingState == "corner") ? "edge" : "corner";
+        setTracingState(newState);
+    }
+
+    return (
+        <>
+            <TracingTopInterface appState={appState} tracingState={tracingState}/>
+            <TracingBottomInterface appState={appState} setAppState={setAppState} tracingState={tracingState} toggleTracingState={toggleTracingState}/>
+        </>
+    );
+}
+
+function App() {
+    const [appState, setAppState] = useState("execution"); // "execution" or "tracing"
+
+
+    return (
+        <>
+
+            <ExecInterface appState={appState} setAppState={setAppState}/>
+            <TracingInterface appState={appState} setAppState={setAppState}/>
 
         </>
     )

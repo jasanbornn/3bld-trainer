@@ -5,6 +5,10 @@ html {
     background-color: #112233;
 }
 
+* {
+    font-family: Helvetica, Arial, sans-serif !important;
+}
+
 h1 {
     color: #ccc;
     font-size: 1.8rem;
@@ -13,6 +17,19 @@ h1 {
 h3 {
     color: #ccc;
     font-size: 1.0rem;
+}
+
+p {
+    color: #ccc;
+
+}
+
+button {
+    background-color: #ccc;
+    border-radius: 15%;
+    font-size: 1.8rem;
+    margin: 10px 20px;
+    padding: 5px;
 }
 
 #root {
@@ -25,11 +42,9 @@ h3 {
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-
-
 }
 
-#top-container {
+#exec-top-container {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -50,29 +65,29 @@ h3 {
     align-items: center;
 }
 
-p {
-    color: #ccc;
 
-}
-
-.button {
-    background-color: #ccc;
-    border-radius: 30%;
-    font-size: 20px;
-    margin: 10px 20px;
-    padding: 5px;
-}
-
-#cube-net-container {
+#exec-bottom-container {
     position: absolute;
     bottom: 20px;
     height: 30%;
+    display: flex;
+    flex-direction: row;
+}
+
+#switch-buttons-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+
+#cube-net-container {
     aspect-ratio: 4 / 3;
     background-color: transparent;
 }
 
 #cube-net {
-    position: absolute;
     display:grid;
     grid-template-columns: auto auto auto auto;
     grid-gap: 5px;
@@ -110,4 +125,61 @@ p {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+#tracing-top-container {
+    display: flex;
+    flex-direction: column;
+}
+
+#tracing-bottom-container {
+    position: absolute;
+    bottom: 20px;
+    height: 100px;
+    display: flex;
+    flex-direction: row;
+}
+
+#edge-preview {
+    display: grid;
+    aspect-ratio: 1 / 1;
+    grid-gap: 5px;
+    grid-template-rows: 1fr 3fr;
+    height: 200px;
+    width: 200px;
+}
+
+#edge-second-sticker {
+    outline: 5px solid black;
+    background-color: green;
+}
+
+#edge-target-sticker {
+    outline: 5px solid black;
+    background-color: yellow;
+}
+
+#corner-preview {
+    display: grid;
+    transform: rotate(225deg);
+    aspect-ratio: 1 / 1;
+    grid-gap: 5px;
+    grid-template-columns: 3fr 1fr;
+    grid-template-rows: 3fr 1fr;
+    height: 200px;
+}
+
+#corner-target-sticker {
+    outline: 5px solid black;
+    background-color: orange;
+}
+
+#corner-second-sticker {
+    outline: 5px solid black;
+    background-color: blue;
+}
+
+#corner-third-sticker {
+    outline: 5px solid black;
+    background-color: white;
 }
