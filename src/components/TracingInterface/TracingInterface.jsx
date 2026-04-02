@@ -24,7 +24,7 @@ function TracingBottomInterface({appState, setAppState, tracingState, toggleTrac
             <button onClick={toggleRevealState}>{(revealState == "revealed") ? "Next" : "Reveal"}</button>
             <div id="bottom-buttons-container">
                 <button onClick={() => {setAppState("execution")}}>Execution</button>
-                <button onClick={toggleTracingState}>{(tracingState == "corner") ? "Corner" : "Edge"}</button>
+                <button onClick={toggleTracingState}>{(tracingState == "corner") ? "Edge" : "Corner"}</button>
             </div>
         </div>
     );

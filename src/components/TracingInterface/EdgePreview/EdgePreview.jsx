@@ -12,8 +12,8 @@ function EdgePreview({tracingState, revealState}) {
 
     useEffect(() => {
         if(revealState == "hidden") {
-            const randPerm = Math.floor(Math.random() * 8);
-            const randOrient = Math.floor(Math.random() * 3);
+            const randPerm = Math.floor(Math.random() * 12);
+            const randOrient = Math.floor(Math.random() * 2);
             setEdgeLabel(getEdgeLabelFromPandO(randPerm, randOrient));
         }
     }, [revealState]);
