@@ -81,7 +81,7 @@ function getCornerPandOFromLabel(label) {
             return [0, 0];
         case "FUR":
             return [0, 1];
-        case "RUF":
+        case "RFU":
             return [0, 2];
         case "UFL":
             return [1, 0];
@@ -93,7 +93,7 @@ function getCornerPandOFromLabel(label) {
             return [2, 0];
         case "BUL":
             return [2, 1];
-        case "LUB":
+        case "LBU":
             return [2, 2];
         case "UBR":
             return [3, 0];
@@ -141,7 +141,7 @@ function getSpeffzLetterFromCornerLabel(label) {
             return letterScheme[2];
         case "UFL":
             return letterScheme[3];
-        case "LUB":
+        case "LBU":
             return letterScheme[4];
         case "LUF":
             return letterScheme[5];
@@ -157,7 +157,7 @@ function getSpeffzLetterFromCornerLabel(label) {
             return letterScheme[10];
         case "FDL":
             return letterScheme[11];
-        case "RUF":
+        case "RFU":
             return letterScheme[12];
         case "RUB":
             return letterScheme[13];
