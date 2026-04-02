@@ -1,68 +1,55 @@
 import { useState } from 'react';
+import './TracingInterface.css';
 
-function TracingCornerPreview({tracingState}) {
-    const display = (tracingState == "corner") ? "grid" : "none";
+import CornerPreview from './CornerPreview/CornerPreview.jsx';
+import EdgePreview from './EdgePreview/EdgePreview.jsx';
 
-    return (
-        <>
-            <div id="corner-preview" style={{display: display}}>
-                <div id="corner-target-sticker"></div>
-                <div id="corner-second-sticker"></div>
-                <div id="corner-third-sticker"></div>
-            </div>
-        </>
-    );
-}
-
-function TracingEdgePreview({tracingState}) {
-    const display = (tracingState == "edge") ? "grid" : "none";
-
-    return (
-        <>
-            <div id="edge-preview" style={{display: display}}>
-                <div id="edge-second-sticker"></div>
-                <div id="edge-target-sticker"></div>
-            </div>
-        </>
-    );
-}
-
-function TracingTopInterface({appState, tracingState}) {
+function TracingTopInterface({appState, tracingState, revealState, setRevealState}) {
     const display = (appState == "tracing") ? "flex" : "none";
 
     return (
         <div id="tracing-top-container" style={{display: display}}>
-            <h1>Tracing [WIP]</h1>
-            <TracingCornerPreview tracingState={tracingState}/>
-            <TracingEdgePreview tracingState={tracingState}/>
+            <h1>Tracing</h1>
+            <CornerPreview tracingState={tracingState} revealState={revealState} setRevealState={setRevealState} />
+            <EdgePreview tracingState={tracingState} revealState={revealState} />
         </div>
     );
 }
 
-function TracingBottomInterface({appState, setAppState, tracingState, toggleTracingState}) {
+function TracingBottomInterface({appState, setAppState, tracingState, toggleTracingState, revealState, toggleRevealState}) {
     const display = (appState == "tracing") ? "flex" : "none";
-
 
     return (
         <div id="tracing-bottom-container" style={{display: display}}>
-            <button onClick={() => {setAppState("execution")}}>Execution</button>
-            <button onClick={toggleTracingState}>{(tracingState == "corner") ? "Corner" : "Edge"}</button>
+            <button onClick={toggleRevealState}>{(revealState == "revealed") ? "Next" : "Reveal"}</button>
+            <div id="bottom-buttons-container">
+                <button onClick={() => {setAppState("execution")}}>Execution</button>
+                <button onClick={toggleTracingState}>{(tracingState == "corner") ? "Corner" : "Edge"}</button>
+            </div>
         </div>
     );
 }
 
 function TracingInterface({appState, setAppState}) {
     const [tracingState, setTracingState] = useState("corner"); //corner or edge
+    const [revealState, setRevealState] = useState("hidden"); //hidden or revealed
 
     function toggleTracingState() {
         const newState = (tracingState == "corner") ? "edge" : "corner";
         setTracingState(newState);
     }
 
+    function toggleRevealState() {
+        const newState = (revealState == "hidden") ? "revealed" : "hidden";
+        setRevealState(newState);
+    }
+
     return (
         <>
-            <TracingTopInterface appState={appState} tracingState={tracingState}/>
-            <TracingBottomInterface appState={appState} setAppState={setAppState} tracingState={tracingState} toggleTracingState={toggleTracingState}/>
+            <TracingTopInterface appState={appState} tracingState={tracingState} revealState={revealState} setRevealState={setRevealState}/>
+            <TracingBottomInterface appState={appState} setAppState={setAppState} 
+                tracingState={tracingState} toggleTracingState={toggleTracingState}
+                revealState={revealState} toggleRevealState={toggleRevealState}/>
         </>
     );
 }

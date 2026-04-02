@@ -3,11 +3,11 @@ function getCornerLabelFromPandO(permutation, orientation) {
         case 0:
             switch(orientation) {
                 case 0:
-                    return "UFR";
+                    return "URF";
                 case 1:
                     return "FUR";
                 case 2:
-                    return "RUF";
+                    return "RFU";
             }
         case 1:
             switch(orientation) {
@@ -21,11 +21,11 @@ function getCornerLabelFromPandO(permutation, orientation) {
         case 2:
             switch(orientation) {
                 case 0:
-                    return "UBL";
+                    return "ULB";
                 case 1:
                     return "BUL";
                 case 2:
-                    return "LUB";
+                    return "LBU";
             }
         case 3:
             switch(orientation) {
@@ -34,7 +34,7 @@ function getCornerLabelFromPandO(permutation, orientation) {
                 case 1:
                     return "RUB";
                 case 2:
-                    return "BUR";
+                    return "BRU";
             }
         case 4:
             switch(orientation) {
@@ -43,16 +43,16 @@ function getCornerLabelFromPandO(permutation, orientation) {
                 case 1:
                     return "RDF";
                 case 2:
-                    return "FDR";
+                    return "FRD";
             }
         case 5:
             switch(orientation) {
                 case 0:
-                    return "DFL";
+                    return "DLF";
                 case 1:
                     return "FDL";
                 case 2:
-                    return "LDF";
+                    return "LFD";
             }
         case 6:
             switch(orientation) {
@@ -61,24 +61,23 @@ function getCornerLabelFromPandO(permutation, orientation) {
                 case 1:
                     return "LDB";
                 case 2:
-                    return "BDL";
+                    return "BLD";
             }
         case 7:
             switch(orientation) {
                 case 0:
-                    return "DBR";
+                    return "DRB";
                 case 1:
                     return "BDR";
                 case 2:
-                    return "RDB";
+                    return "RBD";
             }
-
     }
 }
 
 function getCornerPandOFromLabel(label) {
     switch(label) {
-        case "UFR":
+        case "URF":
             return [0, 0];
         case "FUR":
             return [0, 1];
@@ -90,7 +89,7 @@ function getCornerPandOFromLabel(label) {
             return [1, 1];
         case "FUL":
             return [1, 2];
-        case "UBL":
+        case "ULB":
             return [2, 0];
         case "BUL":
             return [2, 1];
@@ -100,31 +99,31 @@ function getCornerPandOFromLabel(label) {
             return [3, 0];
         case "RUB":
             return [3, 1];
-        case "BUR":
+        case "BRU":
             return [3, 2];
         case "DFR":
             return [4, 0];
         case "RDF":
             return [4, 1];
-        case "FDR":
+        case "FRD":
             return [4, 2];
-        case "DFL":
+        case "DLF":
             return [5, 0];
         case "FDL":
             return [5, 1];
-        case "LDF":
+        case "LFD":
             return [5, 2];
         case "DBL":
             return [6, 0];
         case "LDB":
             return [6, 1];
-        case "BDL":
+        case "BLD":
             return [6, 2];
-        case "DBR":
+        case "DRB":
             return [7, 0];
         case "BDR":
             return [7, 1];
-        case "RDB":
+        case "RBD":
             return [7, 2];
     }
 }
@@ -132,12 +131,13 @@ function getCornerPandOFromLabel(label) {
 function getSpeffzLetterFromCornerLabel(label) {
     const letterScheme = "ABCDEFGHIJKLMNOPQRSTUVWX"
 
+    //TODO: FIX LETTER SCHEME
     switch(label) {
-        case "UBL":
+        case "ULB":
             return letterScheme[0];
         case "UBR":
             return letterScheme[1];
-        case "UFR":
+        case "URF":
             return letterScheme[2];
         case "UFL":
             return letterScheme[3];
@@ -145,7 +145,7 @@ function getSpeffzLetterFromCornerLabel(label) {
             return letterScheme[4];
         case "LUF":
             return letterScheme[5];
-        case "LDF":
+        case "LFD":
             return letterScheme[6];
         case "LDB":
             return letterScheme[7];
@@ -153,7 +153,7 @@ function getSpeffzLetterFromCornerLabel(label) {
             return letterScheme[8];
         case "FUR":
             return letterScheme[9];
-        case "FDR":
+        case "FRD":
             return letterScheme[10];
         case "FDL":
             return letterScheme[11];
@@ -161,23 +161,23 @@ function getSpeffzLetterFromCornerLabel(label) {
             return letterScheme[12];
         case "RUB":
             return letterScheme[13];
-        case "RDB":
+        case "RBD":
             return letterScheme[14];
         case "RDF":
             return letterScheme[15];
-        case "BUR":
+        case "BRU":
             return letterScheme[16];
         case "BUL":
             return letterScheme[17];
-        case "BDL":
+        case "BLD":
             return letterScheme[18];
         case "BDR":
             return letterScheme[19];
-        case "DFL":
+        case "DLF":
             return letterScheme[20];
         case "DFR":
             return letterScheme[21];
-        case "DBR":
+        case "DRB":
             return letterScheme[22];
         case "DBL":
             return letterScheme[23];
@@ -220,5 +220,6 @@ export {
     getCornerPandOFromLabel,
     getNextCornerLabel,
     getTwistedCornerLabel,
+    getSpeffzLetterFromCornerLabel,
     cornerMemoToString,
 }

@@ -171,5 +171,6 @@ export {
     getEdgePandOFromLabel,
     getNextEdgeLabel,
     getFlippedEdgeLabel,
+    getSpeffzLetterFromEdgeLabel,
     edgeMemoToString
 };

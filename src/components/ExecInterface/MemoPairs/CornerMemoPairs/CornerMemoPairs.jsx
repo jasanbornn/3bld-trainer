@@ -8,9 +8,9 @@ import {
 
 function CornerMemoPairs({cubeState}) {
     function genCornerMemo() {
-        let bufferLabel = "UBL";
-        let bufferLabelTwistBy1 = "LUB";
-        let bufferLabelTwistBy2 = "BUL";
+        let bufferLabel = "ULB";
+        let bufferLabelTwistBy1 = "BUL";
+        let bufferLabelTwistBy2 = "LBU";
         let cornerMemo = [];
         let solvedCorners = [0, 0, 0, 0, 0, 0, 0, 0];
 

@@ -1,0 +1,19 @@
+#tracing-top-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+#tracing-bottom-container {
+    position: absolute;
+    bottom: 50px;
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+}
+
+#bottom-buttons-container {
+    display: flex;
+}
+
