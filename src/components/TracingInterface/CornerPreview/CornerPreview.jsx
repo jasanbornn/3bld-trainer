@@ -12,9 +12,17 @@ function CornerPreview({tracingState, revealState}) {
 
     useEffect(() => {
         if(revealState == "hidden") {
-            const randPerm = Math.floor(Math.random() * 8);
-            const randOrient = Math.floor(Math.random() * 3);
-            setCornerLabel(getCornerLabelFromPandO(randPerm, randOrient));
+            const lastLabel = cornerLabel;
+            let newLabel = lastLabel;
+
+            //ensure new label is different from the last one
+            while(newLabel == lastLabel) {
+                const randPerm = Math.floor(Math.random() * 8);
+                const randOrient = Math.floor(Math.random() * 3);
+                newLabel = getCornerLabelFromPandO(randPerm, randOrient);
+            }
+
+            setCornerLabel(newLabel);
         }
     }, [revealState]);
 
