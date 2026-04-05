@@ -21,7 +21,7 @@
 
 #exec-settings-menu {
     top: 10%;
-    background-color: #445566;
+    background-color: rgba(44, 55, 66, 0.7);
     border: 5px solid black;
     border-radius: 3%;
     padding: 20px;

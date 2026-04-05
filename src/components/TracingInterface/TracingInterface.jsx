@@ -34,14 +34,15 @@ function TracingInterface({appState, setAppState}) {
     const [tracingState, setTracingState] = useState("corner"); //corner or edge
     const [revealState, setRevealState] = useState("hidden"); //hidden or revealed
 
-    function toggleTracingState() {
-        const newState = (tracingState == "corner") ? "edge" : "corner";
-        setTracingState(newState);
-    }
-
     function toggleRevealState() {
         const newState = (revealState == "hidden") ? "revealed" : "hidden";
         setRevealState(newState);
+    }
+
+    function toggleTracingState() {
+        const newState = (tracingState == "corner") ? "edge" : "corner";
+        setTracingState(newState);
+        setRevealState("hidden");
     }
 
     return (

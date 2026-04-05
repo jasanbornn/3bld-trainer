@@ -67,8 +67,8 @@ function ExecInterface({Cube, cube, appState, setAppState}) {
     const [solution, setSolution] = useState("");
     const [stickers, setStickers] = useState("UUUUUUUUURRRRRRRRRFFFFFFFFFDDDDDDDDDLLLLLLLLLBBBBBBBBB");
     const [settingsState, setSettingsState] = useState("closed"); // open or closed
-    const [cornerBufferLabel, setCornerBufferLabel] = useState("URF");
-    const [edgeBufferLabel, setEdgeBufferLabel] = useState("UF");
+    const [cornerBufferLabel, setCornerBufferLabel] = useState("ULB");
+    const [edgeBufferLabel, setEdgeBufferLabel] = useState("DF");
 
     function toggleSettingsState() {
         const newState = (settingsState == "open") ? "closed" : "open";

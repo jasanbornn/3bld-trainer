@@ -16,7 +16,7 @@ function getCornerLabelFromPandO(permutation, orientation) {
                 case 1:
                     return "LUF";
                 case 2:
-                    return "FUL";
+                    return "FLU";
             }
         case 2:
             switch(orientation) {
@@ -87,7 +87,7 @@ function getCornerPandOFromLabel(label) {
             return [1, 0];
         case "LUF":
             return [1, 1];
-        case "FUL":
+        case "FLU":
             return [1, 2];
         case "ULB":
             return [2, 0];
@@ -131,7 +131,6 @@ function getCornerPandOFromLabel(label) {
 function getSpeffzLetterFromCornerLabel(label) {
     const letterScheme = "ABCDEFGHIJKLMNOPQRSTUVWX"
 
-    //TODO: FIX LETTER SCHEME
     switch(label) {
         case "ULB":
             return letterScheme[0];
@@ -149,7 +148,7 @@ function getSpeffzLetterFromCornerLabel(label) {
             return letterScheme[6];
         case "LDB":
             return letterScheme[7];
-        case "FUL":
+        case "FLU":
             return letterScheme[8];
         case "FUR":
             return letterScheme[9];
