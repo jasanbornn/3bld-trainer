@@ -1,3 +1,5 @@
+import './EdgeMemoPairs.css';
+
 import {
     getEdgeLabelFromPandO,
     getEdgePandOFromLabel,
@@ -7,11 +9,12 @@ import {
 } from '@/utils/edgePieceUtils.js';
 
 
-function EdgeMemoPairs({cubeState}) {
+function EdgeMemoPairs({cubeState, edgeBufferLabel}) {
+    //edgeBufferLabel is the initial buffer location
 
     function genEdgeMemo() {
-        let bufferLabel = "DF";
-        let bufferLabelFlipped = "FD";
+        let bufferLabel = edgeBufferLabel;
+        let bufferLabelFlipped = getFlippedEdgeLabel(bufferLabel);
         let edgeMemo = [];
         let solvedEdges = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 

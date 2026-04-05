@@ -1,0 +1,61 @@
+#exec-top-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+#scramble-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+#memo-text-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+#exec-settings-menu {
+    top: 10%;
+    background-color: #445566;
+    border: 5px solid black;
+    border-radius: 3%;
+    padding: 20px;
+    min-width: 400px;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    height: 50%;
+    width: 50%;
+}
+
+#buffer-select-buttons-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+#exec-bottom-container {
+    position: absolute;
+    bottom: 20px;
+    height: 30%;
+    display: flex;
+    flex-direction: row;
+}
+
+#buttons-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#cube-net-container {
+    aspect-ratio: 4 / 3;
+    background-color: transparent;
+}

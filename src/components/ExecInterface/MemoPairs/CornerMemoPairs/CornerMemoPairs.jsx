@@ -1,3 +1,5 @@
+import './CornerMemoPairs.css';
+
 import {
     getCornerLabelFromPandO,
     getCornerPandOFromLabel,
@@ -6,11 +8,13 @@ import {
     cornerMemoToString,
 } from '@/utils/cornerPieceUtils.js';
 
-function CornerMemoPairs({cubeState}) {
+function CornerMemoPairs({cubeState, cornerBufferLabel}) {
+    //cornerBufferLabel is the initial buffer location
+
     function genCornerMemo() {
-        let bufferLabel = "ULB";
-        let bufferLabelTwistBy1 = "BUL";
-        let bufferLabelTwistBy2 = "LBU";
+        let bufferLabel = cornerBufferLabel;
+        let bufferLabelTwistBy1 = getTwistedCornerLabel(bufferLabel, 1);
+        let bufferLabelTwistBy2 = getTwistedCornerLabel(bufferLabel, 2);
         let cornerMemo = [];
         let solvedCorners = [0, 0, 0, 0, 0, 0, 0, 0];
 

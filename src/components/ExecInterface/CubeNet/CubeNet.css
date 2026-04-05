@@ -1,0 +1,25 @@
+#cube-net {
+    display:grid;
+    grid-template-columns: auto auto auto auto;
+    grid-gap: 5px;
+    height: 100%;
+    width: 100%;
+}
+
+#cube-net-face {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    aspect-ratio: 1 / 1;
+    background-color: black;
+}
+
+#cube-net-sticker {
+    aspect-ratio: 1 / 1;
+    margin: 1px;
+    background-color: orange;
+}
+
+#cube-net-spacer {
+    aspect-ratio: 1 / 1;
+    background-color: transparent;
+}
