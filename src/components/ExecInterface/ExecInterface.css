@@ -1,3 +1,15 @@
+#exec-container {
+    top: 0px;
+    left: 0px;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
 #exec-top-container {
     display: flex;
     flex-direction: column;
@@ -10,6 +22,10 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
+}
+
+#new-scramble-button {
+    align-self: flex-start;
 }
 
 #memo-text-container {
@@ -41,11 +57,18 @@
 }
 
 #exec-bottom-container {
-    position: absolute;
-    bottom: 20px;
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
+
     height: 30%;
+    width: 100%;
     display: flex;
     flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+    margin-top: auto;
 }
 
 #buttons-container {
@@ -53,9 +76,4 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-}
-
-#cube-net-container {
-    aspect-ratio: 4 / 3;
-    background-color: transparent;
 }

@@ -1,4 +1,13 @@
 #edge-memo-text {
+    margin: 0px;
+}
+    
+#edge-memo-sub-text {
+    margin: 0px;  
+    margin-bottom: 20px;
+}
+
+#edge-memo-text {
     display: flex;
     flex-direction: column;
     justify-content: center;

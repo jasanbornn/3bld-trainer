@@ -38,7 +38,6 @@ function CubeNetSpacer() {
 }
 
 function CubeNet({stickers}) {
-
     return (
         <div id="cube-net">
             <CubeNetSpacer/>

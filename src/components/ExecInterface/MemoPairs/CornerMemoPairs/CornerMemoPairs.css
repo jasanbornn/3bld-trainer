@@ -1,4 +1,13 @@
 #corner-memo-text {
+    margin: 0px;
+}
+    
+#corner-memo-sub-text {
+    margin: 0px;  
+    margin-bottom: 20px;
+}
+
+#corner-memo-text {
     display: flex;
     flex-direction: column;
     justify-content: center;

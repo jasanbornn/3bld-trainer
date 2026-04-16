@@ -1,0 +1,33 @@
+#timer-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border: solid #ccc 4px;
+    border-radius: 10%;
+    padding: 10px;
+    width: 25%;
+    min-width: 250px;
+
+    margin-top: auto;
+    margin-bottom: auto;
+
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
+}
+
+#timer-text {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 4em;
+    margin: 0px;
+}
+
+#timer-stop-box {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    height: 100%;
+    width: 100%;
+    z-index: 1;
+}

@@ -3,6 +3,7 @@ import './ExecInterface.css';
 
 import MemoPairs from './MemoPairs/MemoPairs.jsx';
 import CubeNet from './CubeNet/CubeNet.jsx';
+import Timer from './Timer/Timer.jsx';
 
 function ExecTopInterface({appState, cube, updateScramble, solution, cornerBufferLabel, edgeBufferLabel}) {
     const display = (appState == "execution") ? "flex" : "none";
@@ -13,7 +14,7 @@ function ExecTopInterface({appState, cube, updateScramble, solution, cornerBuffe
                 <div>
                     <h1>{solution}</h1>
                 </div>
-                <button onClick={updateScramble}>↺</button>
+                <button id="new-scramble-button" onClick={updateScramble}>↺</button>
             </div>
 
             <div id="memo-text-conatiner">
@@ -32,9 +33,7 @@ function ExecBottomInterface({appState, setAppState, stickers, toggleSettingsSta
                 <button onClick={() => {setAppState("tracing")}}>Tracing</button>
                 <button onClick={toggleSettingsState}>Settings</button>
             </div>
-            <div id="cube-net-container">
-                <CubeNet stickers={stickers}/>
-            </div>
+            <CubeNet stickers={stickers}/>
         </div>
     );
 }
@@ -82,14 +81,15 @@ function ExecInterface({Cube, cube, appState, setAppState}) {
     }
 
     return (
-        <>
+        <div id="exec-container">
             <ExecTopInterface cube={cube} appState={appState} updateScramble={updateScramble} solution={solution} 
                 cornerBufferLabel={cornerBufferLabel} edgeBufferLabel={edgeBufferLabel}/>
+            <Timer/>
             <ExecSettingsInterface settingsState={settingsState} toggleSettingsState={toggleSettingsState} 
                 cornerBufferLabel={cornerBufferLabel} setCornerBufferLabel={setCornerBufferLabel}
                 edgeBufferLabel={edgeBufferLabel} setEdgeBufferLabel={setEdgeBufferLabel}/>
             <ExecBottomInterface appState={appState} setAppState={setAppState} stickers={stickers} toggleSettingsState={toggleSettingsState}/>
-        </>
+        </div>
     );
 }
 
