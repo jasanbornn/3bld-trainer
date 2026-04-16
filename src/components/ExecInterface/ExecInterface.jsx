@@ -5,11 +5,9 @@ import MemoPairs from './MemoPairs/MemoPairs.jsx';
 import CubeNet from './CubeNet/CubeNet.jsx';
 import Timer from './Timer/Timer.jsx';
 
-function ExecTopInterface({appState, cube, updateScramble, solution, cornerBufferLabel, edgeBufferLabel}) {
-    const display = (appState == "execution") ? "flex" : "none";
-    
+function ExecTopInterface({cube, updateScramble, solution, cornerBufferLabel, edgeBufferLabel}) {
     return (
-        <div id="exec-top-container" style={{display: display}}>
+        <div id="exec-top-container">
             <div id="scramble-container">
                 <div>
                     <h1>{solution}</h1>
@@ -24,11 +22,9 @@ function ExecTopInterface({appState, cube, updateScramble, solution, cornerBuffe
     );
 }
 
-function ExecBottomInterface({appState, setAppState, stickers, toggleSettingsState}) {
-    const display = (appState == "execution") ? "flex" : "none";
-
+function ExecBottomInterface({setAppState, stickers, toggleSettingsState}) {
     return (
-        <div id="exec-bottom-container" style={{display: display}}>
+        <div id="exec-bottom-container">
             <div id="buttons-container">
                 <button onClick={() => {setAppState("tracing")}}>Tracing</button>
                 <button onClick={toggleSettingsState}>Settings</button>
@@ -80,15 +76,17 @@ function ExecInterface({Cube, cube, appState, setAppState}) {
         setStickers(cube.asString());
     }
 
+    const display = (appState == "execution") ? "flex" : "none";
+
     return (
-        <div id="exec-container">
-            <ExecTopInterface cube={cube} appState={appState} updateScramble={updateScramble} solution={solution} 
+        <div id="exec-container" style={{display: display}}>
+            <ExecTopInterface cube={cube} updateScramble={updateScramble} solution={solution} 
                 cornerBufferLabel={cornerBufferLabel} edgeBufferLabel={edgeBufferLabel}/>
             <Timer/>
             <ExecSettingsInterface settingsState={settingsState} toggleSettingsState={toggleSettingsState} 
                 cornerBufferLabel={cornerBufferLabel} setCornerBufferLabel={setCornerBufferLabel}
                 edgeBufferLabel={edgeBufferLabel} setEdgeBufferLabel={setEdgeBufferLabel}/>
-            <ExecBottomInterface appState={appState} setAppState={setAppState} stickers={stickers} toggleSettingsState={toggleSettingsState}/>
+            <ExecBottomInterface setAppState={setAppState} stickers={stickers} toggleSettingsState={toggleSettingsState}/>
         </div>
     );
 }
