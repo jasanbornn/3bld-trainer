@@ -13,7 +13,7 @@ function App() {
 
     return (
         <>
-            <ExecInterface Cube={Cube} cube={cube} appState={appState} setAppState={setAppState}/>
+            <ExecInterface cube={cube} appState={appState} setAppState={setAppState}/>
             <TracingInterface Cube={Cube} appState={appState} setAppState={setAppState}/>
         </>
     )

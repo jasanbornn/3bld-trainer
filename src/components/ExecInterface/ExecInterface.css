@@ -37,23 +37,27 @@
 
 #exec-settings-menu {
     top: 10%;
-    background-color: rgba(44, 55, 66, 0.7);
+    background-color: rgba(44, 55, 66, 0.95);
     border: 5px solid black;
     border-radius: 3%;
     padding: 20px;
-    min-width: 400px;
+    min-width: 100px;
     position: absolute;
     display: flex;
     flex-direction: column;
-    height: 50%;
-    width: 50%;
+    height: 80%;
+    width: 80%;
 }
 
-#buffer-select-buttons-container {
+#settings-select-buttons-container {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
+}
+
+#settings-select-buttons-container Button {
+    font-size: 1.5em;
 }
 
 #exec-bottom-container {
