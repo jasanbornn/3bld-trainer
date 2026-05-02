@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './ExecInterface.css';
 
 import MemoPairs from './MemoPairs/MemoPairs.jsx';
@@ -45,6 +45,13 @@ function ExecSettingsInterface({
     setScrambleType}) {
 
     const display = (settingsWindowState == "open") ? "flex" : "none";
+
+    //save settings to local storage when changed
+    useEffect(() => {
+        localStorage.setItem("scrambleType", scrambleType);
+        localStorage.setItem("edgeBufferLabel", edgeBufferLabel);
+        localStorage.setItem("cornerBufferLabel", cornerBufferLabel);
+    }, [scrambleType, edgeBufferLabel, cornerBufferLabel]);
 
     return (
         <div id="exec-settings-menu" style={{display: display}}>
@@ -146,9 +153,44 @@ function ExecInterface({cube, appState, setAppState}) {
     const [solution, setSolution] = useState("");
     const [stickers, setStickers] = useState("UUUUUUUUURRRRRRRRRFFFFFFFFFDDDDDDDDDLLLLLLLLLBBBBBBBBB");
     const [settingsWindowState, setSettingsWindowState] = useState("closed"); // open or closed
-    const [cornerBufferLabel, setCornerBufferLabel] = useState("ULB");
-    const [edgeBufferLabel, setEdgeBufferLabel] = useState("DF");
-    const [scrambleType, setScrambleType] = useState("full");
+
+    //settings in local storage
+    const [cornerBufferLabel, setCornerBufferLabel] = useState(() => {
+        switch(localStorage.getItem("cornerBufferLabel")) {
+            case "URF":
+                return "URF";
+            case "ULB":
+                return "ULB";
+            default:
+                return "ULB";
+        }
+    });
+
+    const [edgeBufferLabel, setEdgeBufferLabel] = useState(() => {
+        switch(localStorage.getItem("edgeBufferLabel")) {
+            case "DF":
+                return "DF";
+            case "UF":
+                return "UF";
+            case "UR":
+                return "UR";
+            default:
+                return "UR";
+        }
+    });
+
+    const [scrambleType, setScrambleType] = useState(() => {
+        switch(localStorage.getItem("scrambleType")) {
+            case "full":
+                return "full";
+            case "corner":
+                return "corner";
+            case "edge":
+                return "edge";
+            default:
+                return "full";
+        }
+    });
 
     function toggleSettingsState() {
         const newState = (settingsWindowState == "open") ? "closed" : "open";
