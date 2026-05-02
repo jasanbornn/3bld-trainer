@@ -75,11 +75,12 @@ function CornerMemoPairs({cubeState, cornerBufferLabel}) {
         return cornerMemoToString(cornerMemo);
     }
 
+    const cornerMemoText = genCornerMemo();
 
     return (
         <div id="corner-memo-text">
-            <h1 id="corner-memo-text">{genCornerMemo()}</h1>
-            <h3 id="corner-memo-sub-text">Corner Memo</h3>
+            <h1 id="corner-memo-text">{cornerMemoText}</h1>
+            <h3 id="corner-memo-sub-text">{(cornerMemoText.length != 0) ? "Corner Memo" : ""}</h3>
         </div>
     )
 }

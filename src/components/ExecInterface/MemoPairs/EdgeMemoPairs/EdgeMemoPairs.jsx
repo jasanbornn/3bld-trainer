@@ -74,11 +74,12 @@ function EdgeMemoPairs({cubeState, edgeBufferLabel}) {
         return edgeMemoToString(edgeMemo);
     }
 
+    const edgeMemoText = genEdgeMemo();
 
     return (
         <div id="edge-memo-text">
-            <h1 id="edge-memo-text">{genEdgeMemo()}</h1>
-            <h3 id="edge-memo-sub-text">Edge Memo</h3>
+            <h1 id="edge-memo-text">{edgeMemoText}</h1>
+            <h3 id="edge-memo-sub-text">{(edgeMemoText.length != 0) ? "Edge Memo" : ""}</h3>
         </div>
     )
 }
