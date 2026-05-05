@@ -1,10 +1,10 @@
 import './Timer.css';
 
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 //https://www.dzialowski.eu/hold-to-confirm-button/
 //https://react.dev/reference/react/useRef
-function Timer() {
+function Timer({appState}) {
 
     const DEFAULT_COLOR = "#CCC";
     const PRESSING_COLOR = "#FFAA00";
@@ -22,13 +22,27 @@ function Timer() {
     const [timerColor, setTimerColor] = useState(DEFAULT_COLOR);
     const [timerRunning, setTimerRunning] = useState(false);
 
+    const [preCountdownRunning, setPreCountdownRunning] = useState(false);
+
 
     const countdownStartTime = useRef(null);
     const holdIntervalRef = useRef(null);
     const timerStartTime = useRef(null);
     const timerIntervalRef = useRef(null);
 
+    useEffect(() => {
+        document.addEventListener('keyup', handleKeyUp); 
+        document.addEventListener('keydown', handleKeyDown); 
+
+        return () => {
+            document.removeEventListener('keyup', handleKeyUp);    
+            document.removeEventListener('keydown', handleKeyDown);    
+        };
+
+    }, [handleKeyDown, handleKeyUp]);
+
     function startPreCountdown() {
+        setPreCountdownRunning(true);
         countdownStartTime.current = Date.now();
 
         holdIntervalRef.current = setInterval(() => {
@@ -45,6 +59,7 @@ function Timer() {
     }
 
     function stopPreCountdown() {
+        setPreCountdownRunning(false);
         setTimerColor(DEFAULT_COLOR);
 
         if(holdIntervalRef.current) {
@@ -60,6 +75,7 @@ function Timer() {
     }
 
     function cancelPreCountdown() {
+        setPreCountdownRunning(false);
         setTimerColor(DEFAULT_COLOR);
 
         if(holdIntervalRef.current) {
@@ -142,19 +158,60 @@ function Timer() {
         timerStartTime.current = null;
     }
 
+    function handleKeyUp(event) {
+        if(event.key == " ") {
+            stopPreCountdown();
+        }
+    }
+
+    function handleKeyDown(event) {
+        if(event.repeat || preCountdownRunning || appState != "execution") {
+            return;
+        }
+
+        if(event.key == " ") {
+            if(timerRunning) {
+                stopTimer();
+            } else {
+                startPreCountdown();
+            }
+        }
+    }
+
+    function handleMouseOrTouchUp() {
+        stopPreCountdown();
+    }
+
+    function handleMouseOrTouchDown() {
+        if(preCountdownRunning) {
+            return;
+        }
+
+        if(timerRunning) {
+            stopTimer();
+        } else {
+            startPreCountdown();
+        }
+    }
+
+    function handleMouseOrTouchCancel() {
+        cancelPreCountdown();
+    }
+
     return (
         <div id="timer-container"
         style={{borderColor: timerColor}}
-        onMouseDown={startPreCountdown}
-        onMouseUp={stopPreCountdown}
-        onMouseLeave={cancelPreCountdown}
-        onTouchStart={startPreCountdown}
-        onTouchEnd={stopPreCountdown}
-        onTouchCancel={cancelPreCountdown}
+        onMouseDown={handleMouseOrTouchDown}
+        onMouseUp={handleMouseOrTouchUp}
+        onMouseLeave={handleMouseOrTouchCancel}
+        onTouchStart={handleMouseOrTouchDown}
+        onTouchEnd={handleMouseOrTouchUp}
+        onTouchCancel={handleMouseOrTouchCancel}
+
         >
             <h1 id="timer-text" style={{color: timerColor}}>{timerText}</h1>
             <h3 id="timer-sub-text" style={{color: timerColor}}>{timerSubText}</h3>
-            <div id="timer-stop-box" style={{display: (timerRunning ? "block" : "none")}} onMouseDown={stopTimer} onTouchStart={stopTimer}/>
+            <div id="timer-stop-box" style={{display: (timerRunning ? "block" : "none")}} onMouseDown={handleMouseOrTouchDown} onTouchStart={handleMouseOrTouchDown}/>
         </div>
     );
 

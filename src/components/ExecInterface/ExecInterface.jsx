@@ -220,7 +220,7 @@ function ExecInterface({cube, appState, setAppState}) {
         <div id="exec-container" style={{display: display}}>
             <ExecTopInterface cube={cube} updateScramble={updateScramble} solution={solution} 
                 cornerBufferLabel={cornerBufferLabel} edgeBufferLabel={edgeBufferLabel}/>
-            <Timer/>
+            <Timer appState={appState}/>
             <ExecSettingsInterface settingsWindowState={settingsWindowState} toggleSettingsState={toggleSettingsState} 
                 cornerBufferLabel={cornerBufferLabel} setCornerBufferLabel={setCornerBufferLabel}
                 edgeBufferLabel={edgeBufferLabel} setEdgeBufferLabel={setEdgeBufferLabel}
