@@ -160,6 +160,10 @@ function Timer({appState}) {
 
     function handleKeyUp(event) {
         if(event.key == " ") {
+            //prevent spacebar from activating other buttons
+            event.preventDefault();
+            event.stopPropagation();
+
             stopPreCountdown();
         }
     }
@@ -170,6 +174,10 @@ function Timer({appState}) {
         }
 
         if(event.key == " ") {
+            //prevent spacebar from activating other buttons
+            event.preventDefault();
+            event.stopPropagation();
+
             if(timerRunning) {
                 stopTimer();
             } else {
