@@ -4,9 +4,13 @@ import './App.css';
 import ExecInterface from './components/ExecInterface/ExecInterface.jsx';
 import TracingInterface from './components/TracingInterface/TracingInterface.jsx';
 
+import FourCube from '@/utils/FourCube/FourCube.js';
+
 const Cube = window.Cube;
 Cube.initSolver();
 const cube = new Cube();
+
+const fourCube = FourCube();
 
 function App() {
     const [appState, setAppState] = useState("execution"); // "execution" or "tracing"
