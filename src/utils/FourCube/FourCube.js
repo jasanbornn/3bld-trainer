@@ -219,17 +219,112 @@ const FourCube = () => {
         }
     }
 
+    let scrambleString = "";
+    let solutionString = "";
+
+    const applyMove = (moveName, amount) => {
+        switch(moveName) {
+            case "U":
+                moveU(amount);
+                break;
+            case "D":
+                moveD(amount);
+                break;
+            case "L":
+                moveL(amount);
+                break;
+            case "R":
+                moveR(amount);
+                break;
+            case "F":
+                moveF(amount);
+                break;
+            case "B":
+                moveB(amount);
+                break;
+            case "Uw":
+                moveUw(amount);
+                break;
+            case "Dw":
+                moveDw(amount);
+                break;
+            case "Lw":
+                moveLw(amount);
+                break;
+            case "Rw":
+                moveRw(amount);
+                break;
+            case "Fw":
+                moveFw(amount);
+                break;
+            case "Bw":
+                moveBw(amount);
+                break;
+        }
+
+        const suffix = (() => {
+            switch(amount) {
+                case 1:
+                    return "";
+                case 2:
+                    return "2";
+                case 3:
+                    return "\'";
+            }
+        })();
+
+        const invertSuffix = (() => {
+            switch(amount) {
+                case 1:
+                    return "\'";
+                case 2:
+                    return "2";
+                case 3:
+                    return "";
+            }
+        })();
+
+        scrambleString = scrambleString + " " + moveName + suffix;
+        solutionString = moveName + invertSuffix + " " + solutionString;
+    }
+
+    const getScrambleString = () => {
+        return scrambleString;
+    }
+
+    const getSolutionString = () => {
+        return solutionString;
+    }
+
+    const scramble = () => {
+        const ITERATIONS = 40;
+        const moveNames = [["U", "Uw", "D", "Dw"], ["L", "Lw", "R", "Rw"], ["F", "Fw", "B", "Bw"]];
+
+        let lastMoveAxis = -1;
+        let randMoveAxis = -1;
+        for(let i = 0; i < ITERATIONS; i++) {
+            while(randMoveAxis == lastMoveAxis) {
+                randMoveAxis = Math.floor(Math.random() * 3); 
+            }
+
+            const randMoveIndex = Math.floor(Math.random() * 4);
+            const randAmout = Math.floor(Math.random() * 3) + 1;
+
+            applyMove(moveNames[randMoveAxis][randMoveIndex], randAmout);
+
+            lastMoveAxis = randMoveAxis;
+        }
+    }
+
     const fourCube = {
         co: co,
         cp: cp,
         cep: cep,
         ep: ep,
-        moveU: moveU,
-        moveD: moveD,
-        moveL: moveL,
-        moveR: moveR,
-        moveF: moveF,
-        moveB: moveB,
+        applyMove: applyMove,
+        getSolutionString: getSolutionString,
+        getScrambleString, getScrambleString,
+        scramble: scramble,
     }
 
     return fourCube;
