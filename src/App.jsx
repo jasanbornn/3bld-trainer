@@ -15,7 +15,7 @@ const fourCube = FourCube();
 fourCube.scramble();
 console.log("scramble: " + fourCube.getScrambleString());
 console.log("solution: " + fourCube.getSolutionString());
-console.log("ep: " + fourCube.ep);
+fourCube.toString();
 
 function App() {
     const [appState, setAppState] = useState("execution"); // "execution" or "tracing"

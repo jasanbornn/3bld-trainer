@@ -1,23 +1,4 @@
 const FourCube = () => {
-    //Centers
-    //inner UpBackLeft, etc.
-    //Speffz order
-    //let iUBL, iUBR, iUFR, iUFL, iLUB, iLUF, iLDF, iLDB, iFUL, iFUR, iFDR, iFDL, iRUF, iRUB, iRDB, iRDF, iBUR, iBUL, iBDL, iBDR, iDFL, iDFR, iDBR, iDBL;
-
-    //[iUBL, iUBR, iUFR, iUFL, iLUB, iLUF, iLDF, iLDB, iFUL, iFUR, iFDR, iFDL, iRUF, iRUB, iRDB, iRDF, iBUR, iBUL, iBDL, iBDR, iDFL, iDFR, iDBR, iDBL] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23];
-
-    //Corner
-    //UpBackLeft, etc.
-    //Speffz order
-    //let UBL, UBR, UFR, UFL, DFL, DFR, DBR, DBL;
-
-    //[UBL, UBR, UFR, UFL, DFL, DFR, DBR, DBL] = [0, 1, 2, 3, 4, 5, 6, 7]
-
-    //Edges
-    //UpBack, etc.
-    //Speffz order
-    //let UB, UR, UF, UL, LU, LF, LD, LB, FU, FR, FD, FL, RU, RB, RD, RF, BU, BL, BD, BR, DF, DR, DB, DL;
-    //[UB, UR, UF, UL, LU, LF, LD, LB, FU, FR, FD, FL, RU, RB, RD, RF, BU, BL, BD, BR, DF, DR, DB, DL] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
 
     //corner orientation
     let co = [0, 0, 0, 0, 0, 0, 0, 0];
@@ -45,7 +26,6 @@ const FourCube = () => {
         newArray[index1] = temp;
 
         return newArray;
-
     }
 
     //proper modulo function for use with negative numbers. mod(-1, 3) = 2
@@ -260,6 +240,25 @@ const FourCube = () => {
             case "Bw":
                 moveBw(amount);
                 break;
+            case "u":
+                moveUSlice(amount);
+                break;
+            case "d":
+                moveDSlice(amount);
+                break;
+            case "l":
+                moveLSlice(amount);
+                break;
+            case "r":
+                moveRSlice(amount);
+                break;
+            case "f":
+                moveFSlice(amount);
+                break;
+            case "b":
+                moveBSlice(amount);
+                break;
+
         }
 
         const suffix = (() => {
@@ -297,7 +296,7 @@ const FourCube = () => {
     }
 
     const scramble = () => {
-        const ITERATIONS = 40;
+        const ITERATIONS = 10;
         const moveNames = [["U", "Uw", "D", "Dw"], ["L", "Lw", "R", "Rw"], ["F", "Fw", "B", "Bw"]];
 
         let lastMoveAxis = -1;
@@ -316,6 +315,209 @@ const FourCube = () => {
         }
     }
 
+    const getCenterColor = (centerPerm) => {
+        if(centerPerm < 4) {
+            return "U";
+        } else if(centerPerm < 8) {
+            return "L";
+        } else if(centerPerm < 12) {
+            return "F";
+        } else if(centerPerm < 16) {
+            return "R";
+        } else if(centerPerm < 20) {
+            return "B";
+        } else if (centerPerm < 24) {
+            return "D"
+        } else {
+            console.log("color: invalid center permutation!");
+            return "Z";
+        }
+    }
+
+    const getEdgeColor = (edgePerm, primary) => {
+        switch(edgePerm) {
+            case 0:
+                return (primary ? "U" : "B");
+            case 1:
+                return (primary ? "U" : "R");
+            case 2:
+                return (primary ? "U" : "F");
+            case 3:
+                return (primary ? "U" : "L");
+            case 4:
+                return (primary ? "L" : "U");
+            case 5:
+                return (primary ? "L" : "F");
+            case 6:
+                return (primary ? "L" : "D");
+            case 7:
+                return (primary ? "L" : "B");
+            case 8:
+                return (primary ? "F" : "U");
+            case 9:
+                return (primary ? "F" : "R");
+            case 10:
+                return (primary ? "F" : "D");
+            case 11:
+                return (primary ? "F" : "L");
+            case 12:
+                return (primary ? "R" : "U");
+            case 13:
+                return (primary ? "R" : "B");
+            case 14:
+                return (primary ? "R" : "D");
+            case 15:
+                return (primary ? "R" : "F");
+            case 16:
+                return (primary ? "B" : "U");
+            case 17:
+                return (primary ? "B" : "L");
+            case 18:
+                return (primary ? "B" : "D");
+            case 19:
+                return (primary ? "B" : "R");
+            case 20:
+                return (primary ? "D" : "F");
+            case 21:
+                return (primary ? "D" : "R");
+            case 22:
+                return (primary ? "D" : "B");
+            case 23:
+                return (primary ? "D" : "L");
+        }
+    }
+
+    //order: 1 = primary, 2 = secondary, 3 = tertiary
+    const getCornerColor = (cPerm, cOrient, order) => {
+        const relativeOrient = mod(cOrient - (order - 1), 3);
+        switch(cPerm) {
+            case 0:
+                switch(relativeOrient) {
+                    case 0:
+                        return "U";
+                    case 1:
+                        return "B";
+                    case 2:
+                        return "L";
+                }
+            case 1:
+                switch(relativeOrient) {
+                    case 0:
+                        return "U";
+                    case 1:
+                        return "R";
+                    case 2:
+                        return "B";
+                }
+            case 2:
+                switch(relativeOrient) {
+                    case 0:
+                        return "U";
+                    case 1:
+                        return "F";
+                    case 2:
+                        return "R";
+                }
+            case 3:
+                switch(relativeOrient) {
+                    case 0:
+                        return "U";
+                    case 1:
+                        return "L";
+                    case 2:
+                        return "F";
+                }
+            case 4:
+                switch(relativeOrient) {
+                    case 0:
+                        return "D";
+                    case 1:
+                        return "F";
+                    case 2:
+                        return "L";
+                }
+            case 5:
+                switch(relativeOrient) {
+                    case 0:
+                        return "D";
+                    case 1:
+                        return "R";
+                    case 2:
+                        return "F";
+                }
+            case 6:
+                switch(relativeOrient) {
+                    case 0:
+                        return "D";
+                    case 1:
+                        return "B";
+                    case 2:
+                        return "R";
+                }
+            case 7:
+                switch(relativeOrient) {
+                    case 0:
+                        return "D";
+                    case 1:
+                        return "L";
+                    case 2:
+                        return "B";
+                }
+        }
+    }
+
+    const toString = () => {
+        const NUM_STICKERS = 16*6;
+        let resultArray = [];
+
+        //start array no colors set. unset indicated with an "X"
+        for(let i = 0; i < NUM_STICKERS; i++) {
+            resultArray.push("X");
+        }
+
+        //set center colors
+        const centerOffsets = [5, 6, 10, 9];
+        for(let i = 0; i < cep.length; i++) {
+            const cornerIndex = 4 * (i - (i % 4)) + centerOffsets[i % 4];
+            resultArray[cornerIndex] = getCenterColor(cep[i]);
+        }
+
+        //set edge colors
+        //primary edge indexes can be broken into a nice formula like centers
+        //seems to be easier to map secondary edge indexes manually
+        const primaryEdgeOffsets = [2, 11, 13, 4];
+        const secondaryEdgeIndexes = [
+            65, 49, 33, 17, //0-3
+            8, 40, 88, 71, //4-7
+            14, 56, 81, 23, //8-11
+            7, 72, 87, 39, //12-15
+            1, 24, 94, 55, //16-19
+            46, 62, 78, 30, //20-23
+        ];
+        for(let i = 0; i < ep.length; i++) {
+            const primaryEdgeIndex = 4 * (i - (i % 4)) + primaryEdgeOffsets[i % 4];
+            const secondaryEdgeIndex = secondaryEdgeIndexes[i];
+            resultArray[primaryEdgeIndex] = getEdgeColor(ep[i], true);
+            resultArray[secondaryEdgeIndex] = getEdgeColor(ep[i], false)
+        }
+
+        //set corner colors
+        //easier to map manually
+        const primaryCornerIndexes = [0, 3, 15, 12, 80, 83, 95, 92];
+        const secondaryCornerIndexes = [16, 64, 48, 32, 31, 47, 63, 79];
+        const tertiaryCornerIndexes = [67, 51, 35, 19, 44, 60, 76, 28];
+        for(let i = 0; i < cp.length; i++) {
+            const primaryCornerIndex = primaryCornerIndexes[i];
+            const secondaryCornerIndex = secondaryCornerIndexes[i];
+            const tertiaryCornerIndex = tertiaryCornerIndexes[i];
+            resultArray[primaryCornerIndex] = getCornerColor(cp[i], co[i], 1);
+            resultArray[secondaryCornerIndex] = getCornerColor(cp[i], co[i], 2);
+            resultArray[tertiaryCornerIndex] = getCornerColor(cp[i], co[i], 3);
+        }
+
+        console.log(resultArray);
+    }
+
     const fourCube = {
         co: co,
         cp: cp,
@@ -325,6 +527,7 @@ const FourCube = () => {
         getSolutionString: getSolutionString,
         getScrambleString, getScrambleString,
         scramble: scramble,
+        toString: toString,
     }
 
     return fourCube;
