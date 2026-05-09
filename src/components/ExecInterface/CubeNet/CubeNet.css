@@ -12,7 +12,7 @@
 
 #cube-net-face {
     display: grid;
-    grid-template-columns: auto auto auto;
+    grid-template-columns: auto auto auto auto;
     aspect-ratio: 1 / 1;
     background-color: black;
 }

@@ -5,12 +5,14 @@ import MemoPairs from './MemoPairs/MemoPairs.jsx';
 import CubeNet from './CubeNet/CubeNet.jsx';
 import Timer from './Timer/Timer.jsx';
 
-function ExecTopInterface({cube, updateScramble, solution, cornerBufferLabel, edgeBufferLabel}) {
+import FourCube from '@/utils/FourCube/FourCube.js';
+
+function ExecTopInterface({cube, updateScramble, scramble, cornerBufferLabel, edgeBufferLabel}) {
     return (
         <div id="exec-top-container">
             <div id="scramble-container">
                 <div>
-                    <h1>{solution}</h1>
+                    <h1>{scramble}</h1>
                 </div>
                 <button id="new-scramble-button" onClick={updateScramble}>↺</button>
             </div>
@@ -22,14 +24,14 @@ function ExecTopInterface({cube, updateScramble, solution, cornerBufferLabel, ed
     );
 }
 
-function ExecBottomInterface({setAppState, stickers, toggleSettingsState}) {
+function ExecBottomInterface({setAppState, cubeType, stickers, toggleSettingsState}) {
     return (
         <div id="exec-bottom-container">
             <div id="buttons-container">
                 <button onClick={() => {setAppState("tracing")}}>Tracing</button>
                 <button onClick={toggleSettingsState}>Settings</button>
             </div>
-            <CubeNet stickers={stickers}/>
+            <CubeNet cubeType={cubeType} stickers={stickers}/>
         </div>
     );
 }
@@ -150,9 +152,10 @@ function cornerScramble(cube) {
 }
 
 function ExecInterface({cube, appState, setAppState}) {
-    const [solution, setSolution] = useState("");
+    const [scramble, setScramble] = useState("");
     const [stickers, setStickers] = useState("UUUUUUUUURRRRRRRRRFFFFFFFFFDDDDDDDDDLLLLLLLLLBBBBBBBBB");
     const [settingsWindowState, setSettingsWindowState] = useState("closed"); // open or closed
+    const [cubeType, setCubeType] = useState(4); //3 for 3x3, 4 for 4x4
 
     //settings in local storage
     const [cornerBufferLabel, setCornerBufferLabel] = useState(() => {
@@ -199,33 +202,41 @@ function ExecInterface({cube, appState, setAppState}) {
 
     function updateScramble() {
         const Cube = window.Cube;
-        switch(scrambleType) {
-            case "full":
-                fullScramble(cube);
-                break;
-            case "edge":
-                edgeScramble(cube);
-                break;
-            case "corner":
-                cornerScramble(cube);
-                break;
+        const fourCube = FourCube();
+
+        if(cubeType == 3) {
+            switch(scrambleType) {
+                case "full":
+                    fullScramble(cube);
+                    break;
+                case "edge":
+                    edgeScramble(cube);
+                    break;
+                case "corner":
+                    cornerScramble(cube);
+                    break;
+            }
+            setScramble(Cube.inverse(cube.solve()));
+            setStickers(cube.asString());
+        } else if(cubeType == 4) {
+            fourCube.scramble();
+            setScramble(fourCube.getScrambleString());
+            setStickers(fourCube.toString());
         }
-        setSolution(Cube.inverse(cube.solve()));
-        setStickers(cube.asString());
     }
 
     const display = (appState == "execution") ? "flex" : "none";
 
     return (
         <div id="exec-container" style={{display: display}}>
-            <ExecTopInterface cube={cube} updateScramble={updateScramble} solution={solution} 
+            <ExecTopInterface cube={cube} updateScramble={updateScramble} scramble={scramble} 
                 cornerBufferLabel={cornerBufferLabel} edgeBufferLabel={edgeBufferLabel}/>
             <Timer appState={appState}/>
             <ExecSettingsInterface settingsWindowState={settingsWindowState} toggleSettingsState={toggleSettingsState} 
                 cornerBufferLabel={cornerBufferLabel} setCornerBufferLabel={setCornerBufferLabel}
                 edgeBufferLabel={edgeBufferLabel} setEdgeBufferLabel={setEdgeBufferLabel}
                 scrambleType={scrambleType} setScrambleType={setScrambleType}/>
-            <ExecBottomInterface setAppState={setAppState} stickers={stickers} toggleSettingsState={toggleSettingsState}/>
+            <ExecBottomInterface setAppState={setAppState} cubeType={cubeType} stickers={stickers} toggleSettingsState={toggleSettingsState}/>
         </div>
     );
 }

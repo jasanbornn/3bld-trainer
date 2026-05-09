@@ -100,9 +100,9 @@ const FourCube = () => {
 
     const moveB = (turns) => {
         for(let i = 0; i < turns; i++) {
-            cp = fourCycle(cp, 1, 0, 6, 7);
-            co = cornerOrientChange(co, 1, 0, 6, 7);
-            co = fourCycle(co, 1, 0, 6, 7);
+            cp = fourCycle(cp, 1, 0, 7, 6);
+            co = cornerOrientChange(co, 1, 0, 7, 6);
+            co = fourCycle(co, 1, 0, 7, 6);
             cep = fourCycle(cep, 16, 17, 18, 19);
             ep = fourCycle(ep, 16, 17, 18, 19);
             ep = fourCycle(ep, 0, 7, 22, 13);
@@ -297,21 +297,26 @@ const FourCube = () => {
 
     const scramble = () => {
         const ITERATIONS = 10;
-        const moveNames = [["U", "Uw", "D", "Dw"], ["L", "Lw", "R", "Rw"], ["F", "Fw", "B", "Bw"]];
 
-        let lastMoveAxis = -1;
-        let randMoveAxis = -1;
+        //Moves in the same group should not be done consecutively. This avoids scrambles having move combinations like Rw Lw' (equivalent to x rotation)
+        //This is not perfect as it also avoids the Rw Lw combination which ideally should be allowed.
+        //A random group will be selected then a random item from the group. Groups will not be selected twice in a row.
+        const moveNameGroups = [["U"], ["D"], ["L"], ["R"], ["F"], ["B"], ["Uw", "Dw"], ["Lw", "Rw"], ["Fw", "Bw"]]
+
+        let lastMoveGroup = [];
+        let randMoveGroup = [];
         for(let i = 0; i < ITERATIONS; i++) {
-            while(randMoveAxis == lastMoveAxis) {
-                randMoveAxis = Math.floor(Math.random() * 3); 
+            while(randMoveGroup.toString() == lastMoveGroup.toString()) {
+                const randGroupIndex = Math.floor(Math.random() * moveNameGroups.length);
+                randMoveGroup = moveNameGroups[randGroupIndex];
             }
 
-            const randMoveIndex = Math.floor(Math.random() * 4);
+            const randMoveIndex = Math.floor(Math.random() * randMoveGroup.length);
             const randAmout = Math.floor(Math.random() * 3) + 1;
 
-            applyMove(moveNames[randMoveAxis][randMoveIndex], randAmout);
+            applyMove(randMoveGroup[randMoveIndex], randAmout);
 
-            lastMoveAxis = randMoveAxis;
+            lastMoveGroup = randMoveGroup;
         }
     }
 
@@ -515,7 +520,13 @@ const FourCube = () => {
             resultArray[tertiaryCornerIndex] = getCornerColor(cp[i], co[i], 3);
         }
 
-        console.log(resultArray);
+        let resultString = "";
+
+        for(const sticker of resultArray) {
+            resultString += sticker;
+        }
+
+        return resultString;
     }
 
     const fourCube = {

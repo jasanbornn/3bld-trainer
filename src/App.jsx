@@ -10,13 +10,6 @@ const Cube = window.Cube;
 Cube.initSolver();
 const cube = new Cube();
 
-const fourCube = FourCube();
-
-fourCube.scramble();
-console.log("scramble: " + fourCube.getScrambleString());
-console.log("solution: " + fourCube.getSolutionString());
-fourCube.toString();
-
 function App() {
     const [appState, setAppState] = useState("execution"); // "execution" or "tracing"
 
