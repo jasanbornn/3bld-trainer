@@ -12,6 +12,7 @@
 
 #exec-top-container {
     display: flex;
+    width: 100%;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
@@ -22,6 +23,11 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    max-width: 54%;
+}
+
+#scramble-container h1 {
+    text-align: center;
 }
 
 #new-scramble-button {

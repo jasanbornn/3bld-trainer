@@ -7,7 +7,7 @@ import Timer from './Timer/Timer.jsx';
 
 import FourCube from '@/utils/FourCube/FourCube.js';
 
-function ExecTopInterface({cube, updateScramble, scramble, cornerBufferLabel, edgeBufferLabel}) {
+function ExecTopInterface({cubeType, cubeState, updateScramble, scramble, cornerBufferLabel, edgeBufferLabel}) {
     return (
         <div id="exec-top-container">
             <div id="scramble-container">
@@ -18,7 +18,7 @@ function ExecTopInterface({cube, updateScramble, scramble, cornerBufferLabel, ed
             </div>
 
             <div id="memo-text-conatiner">
-                <MemoPairs cubeState={cube} cornerBufferLabel={cornerBufferLabel} edgeBufferLabel={edgeBufferLabel}/>
+                <MemoPairs cubeType={cubeType} cubeState={cubeState} cornerBufferLabel={cornerBufferLabel} edgeBufferLabel={edgeBufferLabel}/>
             </div>
         </div>
     );
@@ -151,11 +151,18 @@ function cornerScramble(cube) {
     cube.co[cube.co.length - 1] = (3 - (orientationSum % 3)) % 3;
 }
 
-function ExecInterface({cube, appState, setAppState}) {
+function ExecInterface({cube, fourCube, appState, setAppState}) {
     const [scramble, setScramble] = useState("");
     const [stickers, setStickers] = useState("UUUUUUUUURRRRRRRRRFFFFFFFFFDDDDDDDDDLLLLLLLLLBBBBBBBBB");
     const [settingsWindowState, setSettingsWindowState] = useState("closed"); // open or closed
     const [cubeType, setCubeType] = useState(4); //3 for 3x3, 4 for 4x4
+    const [cubeState, setCubeState] = useState(() => {
+        if(cubeType == 3) {
+            return cube;
+        } else {
+            return fourCube;
+        }
+    });
 
     //settings in local storage
     const [cornerBufferLabel, setCornerBufferLabel] = useState(() => {
@@ -202,7 +209,6 @@ function ExecInterface({cube, appState, setAppState}) {
 
     function updateScramble() {
         const Cube = window.Cube;
-        const fourCube = FourCube();
 
         if(cubeType == 3) {
             switch(scrambleType) {
@@ -229,7 +235,7 @@ function ExecInterface({cube, appState, setAppState}) {
 
     return (
         <div id="exec-container" style={{display: display}}>
-            <ExecTopInterface cube={cube} updateScramble={updateScramble} scramble={scramble} 
+            <ExecTopInterface cubeType={cubeType} cubeState={cubeState} updateScramble={updateScramble} scramble={scramble} 
                 cornerBufferLabel={cornerBufferLabel} edgeBufferLabel={edgeBufferLabel}/>
             <Timer appState={appState}/>
             <ExecSettingsInterface settingsWindowState={settingsWindowState} toggleSettingsState={toggleSettingsState} 

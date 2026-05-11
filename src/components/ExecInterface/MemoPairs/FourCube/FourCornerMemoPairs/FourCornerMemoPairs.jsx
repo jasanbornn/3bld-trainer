@@ -1,4 +1,4 @@
-import './CornerMemoPairs.css';
+import '../../CornerMemoPairs/CornerMemoPairs.css';
 
 import {
     getCornerLabelFromPandO,
@@ -6,11 +6,10 @@ import {
     getNextCornerLabel,
     getTwistedCornerLabel,
     cornerMemoToString,
-} from '@/utils/cornerPieceUtils.js';
+} from '@/utils/FourCube/fourCornerPieceUtils.js';
 
-function CornerMemoPairs({cubeState, cornerBufferLabel}) {
+function FourCornerMemoPairs({cubeState, cornerBufferLabel}) {
     //cornerBufferLabel is the initial buffer location
-
     function genCornerMemo() {
         let bufferLabel = cornerBufferLabel;
         let bufferLabelTwistBy1 = getTwistedCornerLabel(bufferLabel, 1);
@@ -24,8 +23,8 @@ function CornerMemoPairs({cubeState, cornerBufferLabel}) {
 
         //find solved corners
         for(let i = 0; i < cubeState.getCP().length; i++) {
-            if(cubeState.cp[i] == i) {
-                if(cubeState.co[i] == 0) {
+            if(cubeState.getCP()[i] == i) {
+                if(cubeState.getCO()[i] == 0) {
                     solvedCorners[i] = 1;
                 }
             }
@@ -85,4 +84,4 @@ function CornerMemoPairs({cubeState, cornerBufferLabel}) {
     )
 }
 
-export default CornerMemoPairs;
+export default FourCornerMemoPairs;

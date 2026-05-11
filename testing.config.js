@@ -1,0 +1,20 @@
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+import path from 'path';
+
+// https://vite.dev/config/
+export default defineConfig({
+    //disabling overlay fixes problem where firefox dev tools unexepcectedly pause
+    server: {
+        hmr: {
+            overlay: false,
+        },
+    },
+    plugins: [react()],
+    base: '/testing/cube',
+    resolve:  {
+        alias:  {
+            "@": path.resolve(__dirname, "./src"),
+        }
+    }
+})

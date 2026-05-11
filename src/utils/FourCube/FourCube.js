@@ -1,15 +1,31 @@
 const FourCube = () => {
 
-    //corner orientation
-    let co = [0, 0, 0, 0, 0, 0, 0, 0];
-    //corner permutation
-    let cp = [0, 1, 2, 3, 4, 5, 6, 7];
+    const CO_INIT = [0, 0, 0, 0, 0, 0, 0, 0];
+    const CP_INIT = [0, 1, 2, 3, 4, 5, 6, 7];
+    const CEP_INIT = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]; 
+    const EP_INIT = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]; 
 
+    //corner orientation
+    let co = [...CO_INIT];
+    //corner permutation
+    let cp = [...CP_INIT];
     //center permutation
-    let cep = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]; 
-    
+    let cep = [...CEP_INIT]; 
     //edge permutation
-    let ep = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]; 
+    let ep = [...EP_INIT]; 
+
+    let scrambleString = "";
+    let solutionString = "";
+
+    const reset = () => {
+        co = [...CO_INIT];
+        cp = [...CP_INIT];
+        cep = [...CEP_INIT];
+        ep = [...EP_INIT];
+
+        scrambleString = "";
+        solutionString = "";
+    }
 
     const fourCycle = (array, index1, index2, index3, index4) => {
         const newArray = array;
@@ -199,8 +215,6 @@ const FourCube = () => {
         }
     }
 
-    let scrambleString = "";
-    let solutionString = "";
 
     const applyMove = (moveName, amount) => {
         switch(moveName) {
@@ -297,6 +311,8 @@ const FourCube = () => {
 
     const scramble = () => {
         const ITERATIONS = 10;
+
+        reset();
 
         //Moves in the same group should not be done consecutively. This avoids scrambles having move combinations like Rw Lw' (equivalent to x rotation)
         //This is not perfect as it also avoids the Rw Lw combination which ideally should be allowed.
@@ -529,16 +545,36 @@ const FourCube = () => {
         return resultString;
     }
 
+    const getCP = () => {
+        return cp;
+    };
+
+    const getCO = () => {
+        return co;
+    }
+
+    const getEP = () => {
+        return ep;
+    }
+
+    const getCEP = () => {
+        return cep;
+    }
+
     const fourCube = {
-        co: co,
-        cp: cp,
-        cep: cep,
-        ep: ep,
+        getCP: getCP,
+        getCO: getCO,
+        getEP: getEP,
+        getCEP: getCEP,
         applyMove: applyMove,
         getSolutionString: getSolutionString,
         getScrambleString, getScrambleString,
+        getEdgeColor: getEdgeColor,
+        getCenterColor: getCenterColor,
+        getCornerColor: getCornerColor,
         scramble: scramble,
         toString: toString,
+        reset: reset,
     }
 
     return fourCube;

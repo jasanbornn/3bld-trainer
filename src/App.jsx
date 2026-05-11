@@ -10,12 +10,14 @@ const Cube = window.Cube;
 Cube.initSolver();
 const cube = new Cube();
 
+const fourCube = FourCube();
+
 function App() {
     const [appState, setAppState] = useState("execution"); // "execution" or "tracing"
 
     return (
         <>
-            <ExecInterface cube={cube} appState={appState} setAppState={setAppState}/>
+            <ExecInterface cube={cube} fourCube={fourCube} appState={appState} setAppState={setAppState}/>
             <TracingInterface Cube={Cube} appState={appState} setAppState={setAppState}/>
         </>
     )
