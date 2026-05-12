@@ -1,6 +1,6 @@
 import FourCube from './FourCube.js';
-
 const fourCube = FourCube();
+
 function getCornerLabelFromPandO(permutation, orientation) {
     return fourCube.getCornerColor(permutation, orientation, 1) +
         fourCube.getCornerColor(permutation, orientation, 2) + 

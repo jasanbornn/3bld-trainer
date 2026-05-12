@@ -310,7 +310,7 @@ const FourCube = () => {
     }
 
     const scramble = () => {
-        const ITERATIONS = 10;
+        const ITERATIONS = 30;
 
         reset();
 
