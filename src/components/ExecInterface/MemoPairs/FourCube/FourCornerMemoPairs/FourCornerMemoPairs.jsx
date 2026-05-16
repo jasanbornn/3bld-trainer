@@ -66,7 +66,8 @@ function FourCornerMemoPairs({cubeState, cornerBufferLabel}) {
 
                 //failsafe
                 if(cornerMemo.length > 20) {
-                    return ("corner memo failed " + cornerMemo.toString());
+                    console.log("failed memo. corner labels: " + cornerMemo.toString());
+                    return ("corner memo failed " + cornerMemoToString());
                 }
             }
         }

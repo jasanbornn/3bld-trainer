@@ -310,7 +310,80 @@ const FourCube = () => {
     }
 
     const scramble = () => {
-        const ITERATIONS = 30;
+        
+        reset();
+        
+        //fails
+        //applyMove("Bw", 2);
+        //applyMove("Dw", 2);
+        //return;
+
+        //center scramble
+        //applyMove("r", 3);
+        //applyMove("b", 3);
+        //applyMove("r", 1);
+
+        //applyMove("F", 2)
+
+        //applyMove("r", 3);
+        //applyMove("b", 1);
+        //applyMove("r", 1);
+
+        //applyMove("F", 2)
+
+        //corner scramble
+        //applyMove("U", 1);
+
+        //applyMove("R", 3);
+        //applyMove("F", 1);
+        //applyMove("R", 3);
+        //applyMove("B", 2);
+
+        //applyMove("R", 1);
+        //applyMove("F", 3);
+        //applyMove("R", 3);
+        //applyMove("B", 2);
+        //applyMove("R", 2);
+
+        //applyMove("U", 3);
+
+
+
+        //edge scramble
+        //applyMove("R", 1);
+        //applyMove("U", 1);
+        //applyMove("R", 3);
+        //applyMove("U", 3);
+        //applyMove("r", 2);
+        //applyMove("U", 1);
+        //applyMove("R", 1);
+        //applyMove("U", 3);
+        //applyMove("R", 3);
+
+        //applyMove("L", 3);
+        //applyMove("U", 3);
+        //applyMove("L", 1);
+        //applyMove("U", 1);
+        //applyMove("r", 2);
+        //applyMove("U", 3);
+        //applyMove("L", 3);
+        //applyMove("U", 1);
+        //applyMove("L", 1);
+
+        //applyMove("R", 1);
+        //applyMove("U", 1);
+        //applyMove("R", 3);
+        //applyMove("U", 3);
+        //applyMove("r", 2);
+        //applyMove("U", 1);
+        //applyMove("R", 1);
+        //applyMove("U", 3);
+        //applyMove("R", 3);
+        //applyMove("r", 2);
+
+        //return;
+
+        const ITERATIONS = 20;
 
         reset();
 

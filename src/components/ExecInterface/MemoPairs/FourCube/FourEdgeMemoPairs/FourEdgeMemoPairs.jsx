@@ -14,10 +14,12 @@ function FourEdgeMemoPairs({cubeState, edgeBufferLabel}) {
         let bufferLabel = edgeBufferLabel;
         let edgeMemo = [];
         let solvedEdges = [
-            0, 0, 0, 0, 0, 0, 
-            0, 0, 0, 0, 0, 0, 
-            0, 0, 0, 0, 0, 0, 
-            0, 0, 0, 0, 0, 0
+            0, 0, 0, 0,
+            0, 0, 0, 0,
+            0, 0, 0, 0,
+            0, 0, 0, 0,
+            0, 0, 0, 0,
+            0, 0, 0, 0,
         ]; //24 edges
         
         //buffer position is considered solved at the start
@@ -33,7 +35,6 @@ function FourEdgeMemoPairs({cubeState, edgeBufferLabel}) {
 
         let currentLabel = bufferLabel;
         for(let i = 0; i < solvedEdges.length; i++) {
-            console.log(solvedEdges);
             if(solvedEdges[i] == 0) {
                 i = -1;
 
@@ -65,7 +66,7 @@ function FourEdgeMemoPairs({cubeState, edgeBufferLabel}) {
 
                 //failsafe
                 if(edgeMemo.length > 30) {
-                    console.log("edge lables: " + edgeMemo.toString());
+                    console.log("failed memo. edge labels: " + edgeMemo.toString());
                     return ("edge memo failed " + edgeMemoToString(edgeMemo));
                 }
             }

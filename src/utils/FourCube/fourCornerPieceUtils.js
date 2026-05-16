@@ -114,7 +114,7 @@ function getSpeffzLetterFromCornerLabel(label) {
         case "DBL":
             return letterScheme[23];
         default:
-            console.log("undefined label! (" + label + ")"); 
+            console.log("undefined corner label! (" + label + ")"); 
     }
 }
 
