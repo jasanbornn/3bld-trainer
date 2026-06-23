@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from 'react';
 //https://react.dev/reference/react/useRef
 function Timer({appState}) {
 
-    const DEFAULT_COLOR = "#CCC";
+    const DEFAULT_COLOR = "#FFF";
     const PRESSING_COLOR = "#FFAA00";
     const HIGHLIGHT_COLOR = "#00FF00";
     const HOLD_DELAY = 750; //milliseconds

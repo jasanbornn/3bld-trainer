@@ -1,11 +1,13 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import './ExecInterface.css';
 
 import MemoPairs from './MemoPairs/MemoPairs.jsx';
 import CubeNet from './CubeNet/CubeNet.jsx';
 import Timer from './Timer/Timer.jsx';
 
-function ExecTopInterface({cube, updateScramble, solution, cornerBufferLabel, edgeBufferLabel}) {
+import ExecSettingsInterface from './ExecSettingsInterface/ExecSettingsInterface.jsx'
+
+function ExecTopInterface({cube, updateScramble, solution, cornerBufferLabel, edgeBufferLabel, cornerPairs, cornerHintsEnabled}) {
     return (
         <div id="exec-top-container">
             <div id="scramble-container">
@@ -16,7 +18,8 @@ function ExecTopInterface({cube, updateScramble, solution, cornerBufferLabel, ed
             </div>
 
             <div id="memo-text-conatiner">
-                <MemoPairs cubeState={cube} cornerBufferLabel={cornerBufferLabel} edgeBufferLabel={edgeBufferLabel}/>
+                <MemoPairs cubeState={cube} cornerBufferLabel={cornerBufferLabel} edgeBufferLabel={edgeBufferLabel} 
+                cornerPairs={cornerPairs} cornerHintsEnabled={cornerHintsEnabled}/>
             </div>
         </div>
     );
@@ -30,53 +33,6 @@ function ExecBottomInterface({setAppState, stickers, toggleSettingsState}) {
                 <button onClick={toggleSettingsState}>Settings</button>
             </div>
             <CubeNet stickers={stickers}/>
-        </div>
-    );
-}
-
-function ExecSettingsInterface({
-    settingsWindowState, 
-    toggleSettingsState, 
-    cornerBufferLabel, 
-    setCornerBufferLabel, 
-    edgeBufferLabel, 
-    setEdgeBufferLabel,
-    scrambleType,
-    setScrambleType}) {
-
-    const display = (settingsWindowState == "open") ? "flex" : "none";
-
-    //save settings to local storage when changed
-    useEffect(() => {
-        localStorage.setItem("scrambleType", scrambleType);
-        localStorage.setItem("edgeBufferLabel", edgeBufferLabel);
-        localStorage.setItem("cornerBufferLabel", cornerBufferLabel);
-    }, [scrambleType, edgeBufferLabel, cornerBufferLabel]);
-
-    return (
-        <div id="exec-settings-menu" style={{display: display}}>
-            <h1>Corner Buffer</h1>
-            <div id="settings-select-buttons-container">
-                <button onClick={() => {setCornerBufferLabel("URF")}} style={{backgroundColor: (cornerBufferLabel == "URF") ? "#666" : "#ccc"}}>URF</button>
-                <button onClick={() => {setCornerBufferLabel("ULB")}} style={{backgroundColor: (cornerBufferLabel == "ULB") ? "#666" : "#ccc"}}>ULB</button>
-            </div>
-
-            <h1>Edge Buffer</h1>
-            <div id="settings-select-buttons-container">
-                <button onClick={() => {setEdgeBufferLabel("UF")}} style={{backgroundColor: (edgeBufferLabel == "UF") ? "#666" : "#ccc"}}>UF</button>
-                <button onClick={() => {setEdgeBufferLabel("DF")}} style={{backgroundColor: (edgeBufferLabel == "DF") ? "#666" : "#ccc"}}>DF</button>
-                <button onClick={() => {setEdgeBufferLabel("UR")}} style={{backgroundColor: (edgeBufferLabel == "UR") ? "#666" : "#ccc"}}>UR</button>
-            </div>
-
-            <h1>Scramble Type</h1>
-            <div id="settings-select-buttons-container">
-                <button onClick={() => {setScrambleType("full")}} style={{backgroundColor: (scrambleType == "full") ? "#666" : "#ccc"}}>Full</button>
-                <button onClick={() => {setScrambleType("corner")}} style={{backgroundColor: (scrambleType == "corner") ? "#666" : "#ccc"}}>Corners only</button>
-                <button onClick={() => {setScrambleType("edge")}} style={{backgroundColor: (scrambleType == "edge") ? "#666" : "#ccc"}}>Edges only</button>
-            </div>
-
-            <button onClick={() => {toggleSettingsState()}}>Close</button>
-
         </div>
     );
 }
@@ -155,6 +111,29 @@ function ExecInterface({cube, appState, setAppState}) {
     const [settingsWindowState, setSettingsWindowState] = useState("closed"); // open or closed
 
     //settings in local storage
+    const [cornerPairs, setCornerPairs] = useState(() => {
+        if(localStorage.getItem("cornerPairs") == null) {
+            return {}; 
+        } else {
+            return JSON.parse(localStorage.getItem("cornerPairs"));
+        }
+    });
+
+    const [cornerHintsEnabled, setCornerHintsEnabled] = useState(() => {
+        if(localStorage.getItem("cornerHintsEnabled") == null) {
+            return {}; 
+        } else {
+            window.onload = () => {
+                if(localStorage.getItem("cornerHintsEnabled")) {
+                    document.getElementById("corner-hints-checkbox").checked = true;
+                } else {
+                    document.getElementById("corner-hints-checkbox").checked = false;
+                }
+            }
+            return localStorage.getItem("cornerHintsEnabled");
+        }
+    });
+
     const [cornerBufferLabel, setCornerBufferLabel] = useState(() => {
         switch(localStorage.getItem("cornerBufferLabel")) {
             case "URF":
@@ -214,17 +193,74 @@ function ExecInterface({cube, appState, setAppState}) {
         setStickers(cube.asString());
     }
 
+    function onFileChange(event) {
+        const newCornerPairs = {};
+        const ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWX";
+        const file = event.target.files[0];
+
+        if(file) {
+            let reader = new FileReader();
+            reader.onload = () => {
+                const result = reader.result;
+                //console.log(result);
+                let firstLineSkipped = false;
+                let word = "";
+                let firstLetterIndex = 0;
+                let secondLetterIndex = -1;
+                for(let i = 0; i < result.length; i++) {
+                    if(result[i] == "\n") {
+                        if(firstLineSkipped && word != "") {
+                            //console.log(ALPHABET[firstLetterIndex] + ALPHABET[secondLetterIndex] + ": " + word);
+                            newCornerPairs[ALPHABET[firstLetterIndex] + ALPHABET[secondLetterIndex]] = word;
+                        }
+                        word="";
+                        firstLineSkipped = true;
+                        i += 2;
+                        firstLetterIndex = 0;
+                        secondLetterIndex += 1;
+                    } else if(firstLineSkipped) {
+                        if(result[i] == ",") { 
+                            if(word != "") {
+                                //console.log(ALPHABET[firstLetterIndex] + ALPHABET[secondLetterIndex] + ": " + word);
+                                newCornerPairs[ALPHABET[firstLetterIndex] + ALPHABET[secondLetterIndex]] = word;
+                            }
+                            word = "";
+                            firstLetterIndex += 1;
+                        } else {
+                            word += result[i];
+                        }
+                    }
+                }
+
+                setCornerPairs(newCornerPairs);
+                localStorage.setItem("cornerPairs", JSON.stringify(newCornerPairs));
+            }
+
+            reader.readAsText(file);
+
+        } else {
+            setCornerPairs({});
+        }
+    }
+
+    function onCornerHintOptionChange(event) {
+        setCornerHintsEnabled(event.target.checked);
+        localStorage.setItem("cornerHintsEnabled", event.target.checked);
+    }
+
     const display = (appState == "execution") ? "flex" : "none";
 
     return (
         <div id="exec-container" style={{display: display}}>
             <ExecTopInterface cube={cube} updateScramble={updateScramble} solution={solution} 
-                cornerBufferLabel={cornerBufferLabel} edgeBufferLabel={edgeBufferLabel}/>
+                cornerBufferLabel={cornerBufferLabel} edgeBufferLabel={edgeBufferLabel} 
+                cornerPairs={cornerPairs} cornerHintsEnabled={cornerHintsEnabled}/>
             <Timer appState={appState}/>
             <ExecSettingsInterface settingsWindowState={settingsWindowState} toggleSettingsState={toggleSettingsState} 
                 cornerBufferLabel={cornerBufferLabel} setCornerBufferLabel={setCornerBufferLabel}
                 edgeBufferLabel={edgeBufferLabel} setEdgeBufferLabel={setEdgeBufferLabel}
-                scrambleType={scrambleType} setScrambleType={setScrambleType}/>
+                scrambleType={scrambleType} setScrambleType={setScrambleType} 
+                onFileChange={onFileChange} onCornerHintOptionChange={onCornerHintOptionChange}/>
             <ExecBottomInterface setAppState={setAppState} stickers={stickers} toggleSettingsState={toggleSettingsState}/>
         </div>
     );

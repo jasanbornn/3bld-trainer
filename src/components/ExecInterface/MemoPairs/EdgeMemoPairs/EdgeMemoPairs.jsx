@@ -8,7 +8,6 @@ import {
     edgeMemoToString,
 } from '@/utils/edgePieceUtils.js';
 
-
 function EdgeMemoPairs({cubeState, edgeBufferLabel}) {
     //edgeBufferLabel is the initial buffer location
 
@@ -75,6 +74,8 @@ function EdgeMemoPairs({cubeState, edgeBufferLabel}) {
     }
 
     const edgeMemoText = genEdgeMemo();
+
+
 
     return (
         <div id="edge-memo-text">

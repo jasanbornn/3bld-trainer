@@ -8,7 +8,35 @@ import {
     cornerMemoToString,
 } from '@/utils/cornerPieceUtils.js';
 
-function CornerMemoPairs({cubeState, cornerBufferLabel}) {
+function CornerMemoHints({cornerMemo, cornerPairs, cornerHintsEnabled}) {
+
+    if(!cornerHintsEnabled) {
+        return <></>;
+    }
+
+    let cornerHintsText = "";
+
+    let pair = "";
+    //console.log(cornerPairs);
+    for(let i = 0; i < cornerMemo.length; i++) {
+        if(cornerMemo[i] == " ") {
+            const hint = (cornerPairs[pair] != undefined) ? cornerPairs[pair] : "<none>";
+            //console.log(pair + ": " + hint);
+            cornerHintsText += (hint + " ");
+            pair = "";
+        } else {
+            pair += cornerMemo[i];
+        }
+    }
+    
+    return (
+        <>
+           <h3> {cornerHintsText} </h3>
+        </>
+    )
+}
+
+function CornerMemoPairs({cubeState, cornerBufferLabel, cornerPairs, cornerHintsEnabled}) {
     //cornerBufferLabel is the initial buffer location
 
     function genCornerMemo() {
@@ -80,6 +108,7 @@ function CornerMemoPairs({cubeState, cornerBufferLabel}) {
     return (
         <div id="corner-memo-text">
             <h1 id="corner-memo-text">{cornerMemoText}</h1>
+            <CornerMemoHints cornerMemo={cornerMemoText} cornerPairs={cornerPairs} cornerHintsEnabled={cornerHintsEnabled}/>
             <h3 id="corner-memo-sub-text">{(cornerMemoText.length != 0) ? "Corner Memo" : ""}</h3>
         </div>
     )
